@@ -1,0 +1,9 @@
+*.doc*
+*.png
+*.jp*
+*.gif
+*.pdf
+.ipynb_checkpoints/
+*.tex
+*.csv
+
