@@ -11,3 +11,5 @@
 .Rproj.user
 *.R*
 *.html
+
+*.xtc
