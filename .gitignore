@@ -13,3 +13,6 @@
 *.html
 
 *.xtc
+*.db
+*.DS_Store
+
