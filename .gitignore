@@ -19,3 +19,7 @@
 *.zip
 *.npy
 *.pyemma
+*.tga
+*.ppt*
+*.p
+*.pyc
