@@ -3,6 +3,8 @@ import mdtraj as md
 from pyemma.coordinates.clustering import KmeansClustering
 from pyemma.msm import MaximumLikelihoodHMSM
 import pandas as pd
+import pickle
+# Creates a PDB of the cluster centers given a PyEmma HMM object
 
 
 def create_top(n):
@@ -20,7 +22,8 @@ def create_top(n):
 
 traj_num = 3
 n_segs = 1000
-idxs = [119, 232, 886]
+idxs = [902]
+nstates = [3]
 xyzs = []
 for idx in range(n_segs):
 
@@ -34,11 +37,18 @@ for idx in range(n_segs):
     xyzs.append(xyz)
 
     if idx in idxs:
+        i = np.where(idx==np.array(idxs))[0][0]
+        print(i)
         # Load HMM
-        hmm = MaximumLikelihoodHMSM().load('msm_10ps/output_{0}/{1}_hmm_obj.pyemma'.format(traj_num, idx))
+#         hmm = MaximumLikelihoodHMSM().load('msm_10ps/output_{0}/{1}_hmm_obj.pyemma'.format(traj_num, idx))
+        hmm = pickle.load(open('bhmm_mods/{0}_state/traj_{1}-idx_{2}_bhmm.p'.format(nstates[i], traj_num, idxs[i]), 'rb'))
+        obs_set = hmm.observable_set
         m_assign = hmm.metastable_assignments
         N = hmm.nstates
         # Save individual trajectory
+        print(xyz.shape)
+        xyz = xyz[:,obs_set, :]
+        print(xyz.shape)
         top = create_top(xyz.shape[1])
         print(top)
         traj = md.Trajectory(xyz=xyz, topology=top)
